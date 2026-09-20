@@ -1,0 +1,250 @@
+﻿@charset "UTF-8";
+
+/*
+   158.256 Web Application Design
+   Week 3 CSS Practical: Case Problem 4 - The Great Lakescape Lodge
+   Author: Yulu Chen
+   Date: 2026-09-20
+
+   Filename: lake_styles.css
+   Description: colour scheme and typography styles for the lodge homepage
+*/
+
+/* 
+   Task 3.a: Character encoding declaration
+   Must be the very first statement in the stylesheet
+    */
+
+/* 
+   Task 3.b: Web fonts - register the two fonts from the ZIP
+   woff is listed first (smaller, faster), ttf as fallback
+    */
+
+/* Decorative script font, used for headings */
+@font-face {
+   font-family: "Dobkin Plain";
+   src: url(DobkinPlain.woff) format("woff"),
+        url(DobkinPlain.ttf) format("truetype");
+}
+
+/* Elegant italic font, used for the guest review quote */
+@font-face {
+   font-family: "CAC Champagne";
+   src: url(cac_champagne.woff) format("woff"),
+        url(cac_champagne.ttf) format("truetype");
+}
+
+/* Apply fonts: headings get the script font,
+   body text falls back to system sans-serif fonts */
+h1, h2 {
+   font-family: "Dobkin Plain", Georgia, serif;
+}
+
+blockquote {
+   font-family: "CAC Champagne", "Times New Roman", serif;
+}
+
+body {
+   font-family: Verdana, Geneva, sans-serif;
+}
+
+/* 
+   Task 3.c: Colours using BOTH colour values and colour names
+    */
+
+/* Hex colour values for the page background and body text */
+body {
+   background-color: #e4e4d4;
+   color: #333333;
+}
+
+header {
+   background-color: #4c1f50;
+}
+
+/* Named colours for the footer */
+footer {
+   background-color: darkorchid;
+   color: white;
+}
+
+/* 
+   Task 3.d: Semi-transparent colour (rgba and hsla)
+   Alpha value: 0 = fully transparent, 1 = fully opaque
+    */
+
+/* Deep purple sidebar at 85% opacity */
+#rightcol {
+   background-color: rgba(76, 31, 80, 0.85);
+}
+
+/* Pale purple note boxes at 70% opacity */
+blockquote {
+   background-color: hsla(300, 30%, 90%, 0.7);
+}
+
+/* 
+   Task 3.j: Grid layout for the whole page
+   Named grid areas (grid-template-areas), fr = fraction unit
+    */
+
+body {
+   display: grid;
+   grid-template-areas:
+      "header  header"
+      "leftcol rightcol"
+      "footer  footer";
+   grid-template-columns: 3fr 1fr;
+   gap: 10px;
+}
+
+/* Place each section into its named grid area */
+header    { grid-area: header; }
+#leftcol  { grid-area: leftcol; }
+#rightcol { grid-area: rightcol; }
+footer    { grid-area: footer; }
+
+/* 
+   Task 3.j: Flexbox layout for the top navigation bar
+   justify-content distributes items along the main axis
+    */
+
+header nav ul {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   list-style-type: none;
+   margin: 0;
+   padding: 5px 0;
+}
+
+header nav a {
+   display: block;
+   text-decoration: none;
+   padding: 10px 15px;
+}
+
+/* 
+   Task 3.e: Nested (descendant) selector
+   Matches all links inside the nav within the right column
+    */
+
+#rightcol nav a {
+   font-size: 0.9em;
+}
+
+/* Light purple headings stay readable on the dark sidebar */
+#rightcol nav h2 {
+   color: lavender;
+}
+
+/* 
+   Task 3.e: Child selector (>) matches direct children only
+    */
+
+#leftcol > p {
+   line-height: 1.5em;
+   margin: 10px 0;
+}
+
+/* 
+   Task 3.e: Adjacent sibling selector (+) and id selectors (#)
+    */
+
+/* The image that comes directly after the h1 gets a white frame */
+h1 + img {
+   border: 3px solid white;
+}
+
+/* id selectors: inner spacing for the two main columns */
+#leftcol {
+   padding: 0px 15px;
+}
+
+#rightcol {
+   padding: 10px;
+}
+
+/* 
+   Task 3.f: List styles - change list markers
+    */
+
+/* Square markers for the sidebar link lists */
+#rightcol nav ul li {
+   list-style-type: square;
+}
+
+/* Circle markers pulled inside the content box for notice lists */
+aside ul {
+   list-style-type: circle;
+   list-style-position: inside;
+   padding-left: 5px;
+}
+
+/* 
+   Task 3.g: Pseudo-classes - style element states
+    */
+
+/* The four link states: unvisited, visited, hover, clicked */
+a:link    { color: ivory; }
+a:visited { color: lavender; }
+a:hover   { color: gold; }
+a:active  { color: white; }
+
+/* First item of each sidebar list is bold */
+#rightcol nav li:first-child {
+   font-weight: bold;
+}
+
+/* 
+   Task 3.g: Pseudo-element - style a part of an element
+    */
+
+/* First line of each paragraph in small caps */
+#leftcol > p::first-line {
+   font-variant: small-caps;
+}
+
+/* 
+   Task 3.j: Flexbox for the left column notice boxes
+   flex shorthand = flex-grow, flex-shrink, flex-basis
+    */
+
+#leftcol {
+   display: flex;
+   flex-flow: row wrap;
+}
+
+#leftcol aside {
+   flex: 1 1 200px;
+   margin: 5px;
+   padding: 15px;
+   background-color: hsla(300, 30%, 90%, 0.5);
+}
+
+/* 
+   Task 3.i: Generated content - add quotation marks
+   ::before / ::after insert content not present in the HTML
+    */
+
+blockquote::before {
+   content: "\201C";          /* Unicode left double quote */
+   font-size: 2em;
+   color: gold;
+   display: block;
+}
+
+blockquote::after {
+   content: "\201D";          /* Unicode right double quote */
+   font-size: 2em;
+   color: gold;
+}
+
+/* 
+   Task 3.h: Margins and padding around the footer
+    */
+
+footer {
+   text-align: center;
+   padding: 10px;
+}
